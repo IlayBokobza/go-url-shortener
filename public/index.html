@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GO SERVER!</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <nav>
@@ -13,6 +13,16 @@
     </nav>
     <h2>Urls:</h2>
     <main id="urlContainer"></main>
+    <button id="newUrlBtn" class="newUrlBtn">+</button>
+    <!-- popup -->
+    <div id="popup" style="display: none;" class="popup">
+        <form id="newUrlForm" class="popup__content">
+            <input placeholder="Url" id="urlInput" type="text">
+            <button>Add</button>
+            <button id="closePopupBtn">Exit</button>
+            <p id="newUrlFormFeedback"></p>
+        </form>
+    </div>
     <script src="static/index.js"></script>
 </body>
 </html>

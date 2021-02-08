@@ -19,6 +19,11 @@ func (s setVar) Write(bs []byte) (int, error) {
 func setRoutes() {
 	//get all
 	http.HandleFunc("/api/get", func(res http.ResponseWriter, req *http.Request) {
+		//checks for get method
+		if req.Method != "GET" {
+			return
+		}
+
 		file, _ := ioutil.ReadFile("data.json")
 
 		res.Header().Set("content-type", "application/json")
@@ -28,6 +33,11 @@ func setRoutes() {
 
 	//add new
 	http.HandleFunc("/api/add", func(res http.ResponseWriter, req *http.Request) {
+		//checks for post method
+		if req.Method != "POST" {
+			return
+		}
+
 		io.Copy(write, req.Body)
 
 		data, msg := addURL(string(reqBody))
@@ -39,5 +49,19 @@ func setRoutes() {
 
 		res.Header().Set("content-type", "appliction/json")
 		res.Write(data)
+	})
+
+	//delete one
+	http.HandleFunc("/api/delete", func(res http.ResponseWriter, req *http.Request) {
+		//checks fort delete method
+		if req.Method != "DELETE" {
+			return
+		}
+
+		io.Copy(write, req.Body)
+
+		deleteURL(string(reqBody))
+
+		res.Write([]byte{})
 	})
 }

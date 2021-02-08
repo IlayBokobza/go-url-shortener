@@ -2,10 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"math/rand"
-	"os"
 	"regexp"
 	"time"
 )
@@ -22,11 +20,6 @@ type jsonDataS struct {
 
 //delete a url
 func deleteURL(url string) {
-	if url == "noUrl" {
-		fmt.Println("Please Enter a url to delete")
-		os.Exit(1)
-	}
-
 	regX := regexp.MustCompile(`(https?:\/\/)?www.`)
 	url = regX.ReplaceAllString(url, "")
 
@@ -41,43 +34,10 @@ func deleteURL(url string) {
 	}
 
 	if toDeleteIndex == -1 {
-		fmt.Println("No url found.")
-		os.Exit(1)
+		return
 	}
 
 	data = append(data[:toDeleteIndex], data[toDeleteIndex+1:]...)
-
-	newJSON, _ := json.Marshal(&data)
-
-	ioutil.WriteFile("data.json", newJSON, 0666)
-
-	fmt.Println("Url " + url + " was deleted")
-
-}
-
-//update the url to a new one
-func updateURL(url string, newURL string) {
-	//parses url
-	regX := regexp.MustCompile(`(https?:\/\/)?www.`)
-	url = regX.ReplaceAllString(url, "")
-	newURL = regX.ReplaceAllString(newURL, "")
-
-	data := getJSONData()
-	selectedURLIndex := -1
-
-	for i, val := range data {
-		if val.URL == url {
-			selectedURLIndex = i
-			break
-		}
-	}
-
-	if selectedURLIndex == -1 {
-		fmt.Println("Selected url not found")
-		os.Exit(1)
-	}
-
-	data[selectedURLIndex].URL = newURL
 
 	newJSON, _ := json.Marshal(&data)
 
